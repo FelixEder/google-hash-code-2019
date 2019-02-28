@@ -5,6 +5,7 @@ public class Main {
   private int collectionSize;
   private ArrayList<Photo> collection;
 
+
   public static void main(String[] args) {
     new Main();
   }
