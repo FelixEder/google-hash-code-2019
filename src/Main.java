@@ -19,6 +19,7 @@ public class Main {
       Photo firstPhoto = collection.get(photoIndex);
       collection.remove(photoIndex);
       boolean currentOrientation = firstPhoto.isHorizontal();
+      //System.out.println("firstPhoto: " + firstPhoto.getID());
 
       if (currentOrientation) {
           slideShow.add(new Slide(firstPhoto, null));
@@ -27,6 +28,8 @@ public class Main {
           while (iter.hasNext()){
               Photo currPhoto = iter.next();
               if (!currPhoto.isHorizontal()) {
+                  //System.out.println("secondPhoto: " + currPhoto.getID());
+
                   slideShow.add(new Slide(firstPhoto, currPhoto));
                   iter.remove();
                   break;
@@ -38,15 +41,18 @@ public class Main {
           Slide currentSlide = slideShow.get(slideShow.size() - 1);
           Photo nextPhoto = collection.get(i);
           if (nextPhoto.isHorizontal()) {
+              //System.out.println("horizontal photo");
               Slide newSlide = new Slide(nextPhoto, null);
               if (getTransitionScore(currentSlide, newSlide) >= 1) {
                   slideShow.add(newSlide);
+                  //System.out.println("new horizontol photo");
               }
           }else {
             ListIterator<Photo> iter = collection.listIterator();
               while (iter.hasNext()) {
                   Photo maybeVertical = iter.next();
                   if (!maybeVertical.isHorizontal()){
+                    //System.out.println("Second vertical");
                     Slide newSlide = new Slide(nextPhoto, maybeVertical);
                     if (getTransitionScore(currentSlide, newSlide) >= 1) {
                         slideShow.add(newSlide);
@@ -120,10 +126,13 @@ public class Main {
     }
 
     for(String tag: slideTwoTags) {
-      if(!slideTwoTags.contains(tag))
+      if(!slideOneTags.contains(tag))
         tagsInTwo++;
     }
-
+    /**System.out.println("commonTags: " + commonTags);
+    System.out.println("tagsInOne: " + tagsInOne);
+    System.out.println("tagsInTwo " + tagsInTwo);
+    */
     return Math.min(Math.min(commonTags, tagsInOne), tagsInTwo);
   }
 }
