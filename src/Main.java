@@ -12,6 +12,8 @@ public class Main {
   public Main() {
       getInput();
 
+      slideShow = new ArrayList<>();
+
       Random random = new Random();
       int photoIndex = random.nextInt(collection.size());
       Photo firstPhoto = collection.get(photoIndex);
@@ -25,6 +27,7 @@ public class Main {
               Photo currPhoto = collection.get(i);
               if (!currPhoto.isHorizontal()) {
                   slideShow.add(new Slide(firstPhoto, currPhoto));
+                  break;
               }
           }
       }
@@ -44,8 +47,8 @@ public class Main {
                     Slide newSlide = new Slide(nextPhoto, maybeVertical);
                     if (getTransitionScore(currentSlide, newSlide) >= 1) {
                         slideShow.add(newSlide);
+                        break;
                     }
-
                   }
               }
           }
