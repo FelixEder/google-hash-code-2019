@@ -18,7 +18,7 @@ public class Main {
     collectionSize = Integer.parseInt(scanner.nextLine());
     collection = new ArrayList<>();
     while(scanner.hasNextLine()) {
-      String[] photo = scanner.nextLine().split("\\|",-1);
+      String[] photo = scanner.nextLine().split("\\s+");
       int tagSize = Integer.parseInt(photo[1]);
       String[] tags = new String[tagSize];
       for(int i = 0; i < tagSize; i++) {
