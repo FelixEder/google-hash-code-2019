@@ -4,6 +4,7 @@ public class Main {
   private int collectionSize;
   private ArrayList<Photo> collection;
   private ArrayList<Slide> slideShow;
+  private ArrayList<Photo> photosToRemove;
 
   public static void main(String[] args) {
     new Main();
@@ -13,6 +14,7 @@ public class Main {
       getInput();
 
       slideShow = new ArrayList<>();
+      photosToRemove = new ArrayList<>();
 
       Random random = new Random();
       int photoIndex = random.nextInt(collection.size());
@@ -22,13 +24,13 @@ public class Main {
 
       if (currentOrientation) {
           slideShow.add(new Slide(firstPhoto, null));
+          photosToRemove.add(firstPhoto);
       }else {
-          ListIterator<Photo> iter = collection.listIterator();
-          while (iter.hasNext()){
-              Photo currPhoto = iter.next();
+          for(int i = 0; i < collection.size(); i++){
+              Photo currPhoto = collection.get(i);
+              if(photosToRemove.contains(currPhoto)) continue;
               if (!currPhoto.isHorizontal()) {
                   slideShow.add(new Slide(firstPhoto, currPhoto));
-                  iter.remove();
                   break;
               }
           }
@@ -37,6 +39,7 @@ public class Main {
       for(int i=0; i<collection.size(); i++){
           Slide currentSlide = slideShow.get(slideShow.size() - 1);
           Photo nextPhoto = collection.get(i);
+          if(photosToRemove.contains(nextPhoto)) continue;
           if (nextPhoto.isHorizontal()) {
               Slide newSlide = new Slide(nextPhoto, null);
               if (getTransitionScore(currentSlide, newSlide) >= 1) {
@@ -45,6 +48,7 @@ public class Main {
           }else {
               for (int j = i; j < collection.size(); j++) {
                   Photo maybeVertical = collection.get(j);
+                  if(photosToRemove.contains(maybeVertical)) continue;
                   if (!maybeVertical.isHorizontal()){
                     Slide newSlide = new Slide(nextPhoto, maybeVertical);
                     if (getTransitionScore(currentSlide, newSlide) >= 1) {
@@ -118,7 +122,7 @@ public class Main {
     }
 
     for(String tag: slideTwoTags) {
-      if(!slideTwoTags.contains(tag))
+      if(!slideOneTags.contains(tag))
         tagsInTwo++;
     }
 
