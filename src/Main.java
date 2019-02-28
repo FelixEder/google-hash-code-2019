@@ -31,6 +31,8 @@ public class Main {
               if(photosToRemove.contains(currPhoto)) continue;
               if (!currPhoto.isHorizontal()) {
                   slideShow.add(new Slide(firstPhoto, currPhoto));
+                  photosToRemove.add(currPhoto);
+                  photosToRemove.add(firstPhoto);
                   break;
               }
           }
@@ -44,15 +46,18 @@ public class Main {
               Slide newSlide = new Slide(nextPhoto, null);
               if (getTransitionScore(currentSlide, newSlide) >= 1) {
                   slideShow.add(newSlide);
+                  photosToRemove.add(nextPhoto);
               }
           }else {
-              for (int j = i; j < collection.size(); j++) {
+              for (int j = i + 1; j < collection.size(); j++) {
                   Photo maybeVertical = collection.get(j);
                   if(photosToRemove.contains(maybeVertical)) continue;
                   if (!maybeVertical.isHorizontal()){
                     Slide newSlide = new Slide(nextPhoto, maybeVertical);
                     if (getTransitionScore(currentSlide, newSlide) >= 1) {
                         slideShow.add(newSlide);
+                        photosToRemove.add(nextPhoto);
+                        photosToRemove.add(maybeVertical);
                         break;
                     }
                   }
