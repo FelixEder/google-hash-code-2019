@@ -23,10 +23,12 @@ public class Main {
       if (currentOrientation) {
           slideShow.add(new Slide(firstPhoto, null));
       }else {
-          for(int i=0; i<collection.size(); i++){
-              Photo currPhoto = collection.get(i);
+          ListIterator<Photo> iter = collection.listIterator();
+          while (iter.hasNext()){
+              Photo currPhoto = iter.next();
               if (!currPhoto.isHorizontal()) {
                   slideShow.add(new Slide(firstPhoto, currPhoto));
+                  iter.remove();
                   break;
               }
           }
@@ -41,12 +43,14 @@ public class Main {
                   slideShow.add(newSlide);
               }
           }else {
-              for (int j = i; j < collection.size(); j++) {
-                  Photo maybeVertical = collection.get(j);
+            ListIterator<Photo> iter = collection.listIterator();
+              while (iter.hasNext()) {
+                  Photo maybeVertical = iter.next();
                   if (!maybeVertical.isHorizontal()){
                     Slide newSlide = new Slide(nextPhoto, maybeVertical);
                     if (getTransitionScore(currentSlide, newSlide) >= 1) {
                         slideShow.add(newSlide);
+                        iter.remove();
                         break;
                     }
                   }
