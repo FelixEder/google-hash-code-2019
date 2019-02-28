@@ -1,9 +1,11 @@
+import java.util.Set;
+
 public class Photo {
   private boolean isHorizontal;
-  private String[] tags;
+  private Set<String> tags;
   private int ID;
 
-  public Photo(String horizontal, String[] tags, int ID) {
+  public Photo(String horizontal, Set<String> tags, int ID) {
     isHorizontal = (horizontal.equals("H"));
     this.tags = tags;
     this.ID = ID;
@@ -13,7 +15,7 @@ public class Photo {
     return isHorizontal;
   }
 
-  public String[] getTags() {
+  public Set<String> getTags() {
     return tags;
   }
 

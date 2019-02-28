@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 public class Main {
   private int collectionSize;
@@ -22,9 +24,9 @@ public class Main {
     while(scanner.hasNextLine()) {
       String[] photo = scanner.nextLine().split("\\s+");
       int tagSize = Integer.parseInt(photo[1]);
-      String[] tags = new String[tagSize];
+      Set<String> tags = new HashSet<>();
       for(int i = 0; i < tagSize; i++) {
-        tags[i] = photo[i+2];
+        tags.add(photo[i+2]);
       }
       collection.add(new Photo(photo[0], tags, iteration));
       iteration++;
@@ -41,5 +43,43 @@ public class Main {
       } else
         System.out.println(slide.getFirstPhoto().getID() + " " + slide.getSecondPhoto().getID());
     }
+  }
+
+  public int getTransitionScore(Slide slideOne, Slide slideTwo) {
+    Set<String> slideOneTags;
+    Set<String> slideTwoTags;
+
+    if(slideOne.hasSingleHorizontal()) {
+      slideOneTags = slideOne.getFirstPhoto().getTags();
+    } else {
+      slideOneTags = slideOne.getFirstPhoto().getTags();
+      slideOneTags.addAll(slideOne.getSecondPhoto().getTags());
+    }
+
+    if(slideTwo.hasSingleHorizontal()) {
+      slideTwoTags = slideTwo.getFirstPhoto().getTags();
+    } else {
+      slideTwoTags = slideTwo.getFirstPhoto().getTags();
+      slideTwoTags.addAll(slideTwo.getSecondPhoto().getTags());
+    }
+
+    int commonTags = 0;
+    int tagsInOne = 0;
+    int tagsInTwo = 0;
+
+    for(String tag: slideOneTags) {
+      if(slideTwoTags.contains(tag)) {
+        commonTags++;
+      } else {
+        tagsInOne++;
+      }
+    }
+
+    for(String tag: slideTwoTags) {
+      if(!slideTwoTags.contains(tag))
+        tagsInTwo++;
+    }
+
+    return Math.min(Math.min(commonTags, tagsInOne), tagsInTwo);
   }
 }
