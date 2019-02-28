@@ -14,4 +14,8 @@ public class Slide {
   public Photo getSecondPhoto() {
     return secondPhoto;
   }
+
+  public boolean hasSingleHorizontal() {
+    return (secondPhoto == null);
+  }
 }

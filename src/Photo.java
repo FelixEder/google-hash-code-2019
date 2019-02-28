@@ -1,10 +1,12 @@
 public class Photo {
   private boolean isHorizontal;
   private String[] tags;
+  private int ID;
 
-  public Photo(String horizontal, String[] tags) {
+  public Photo(String horizontal, String[] tags, int ID) {
     isHorizontal = (horizontal.equals("H"));
     this.tags = tags;
+    this.ID = ID;
   }
 
   public boolean isHorizontal() {
@@ -13,5 +15,9 @@ public class Photo {
 
   public String[] getTags() {
     return tags;
+  }
+
+  public int getID() {
+    return ID;
   }
 }
