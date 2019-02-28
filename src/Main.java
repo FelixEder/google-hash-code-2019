@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 public class Main {
   private int collectionSize;
@@ -16,7 +13,7 @@ public class Main {
       getInput();
 
       Random random = new Random();
-      int photoIndex = rand.nextInt(collection.size());
+      int photoIndex = random.nextInt(collection.size());
       Photo firstPhoto = collection.get(photoIndex);
       collection.remove(photoIndex);
       boolean currentOrientation = firstPhoto.isHorizontal();
